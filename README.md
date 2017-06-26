@@ -1,2 +1,2 @@
-# Abalone-Clone
+# Abaclone
 A clone of the board game Abalone
