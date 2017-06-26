@@ -1,17 +1,32 @@
+body {
+	background: lightblue;
+}
+
+h1 {
+	text-align: center;
+}
+
+#game {
+  height: 500px;
+  width: 500px;
+  margin: 0 auto
+}
+
+.column {
+  float: left
+}
+
 .blackball {
-	content:url(images/blackball.png);
+	content:url(images/plainblackball.png);
 	width: 50px;
-	height: 50px;
 }
 
 .whiteball {
-	content:url(images/whiteball.png);
+	content:url(images/plainwhiteball.png);
 	width: 50px;
-	height: 50px;
 }
 
 .tile {
-	content:url(images/tile.png);
-	width: 70px;
-	height: 70px;
+	content:url(images/plaintile.png);
+	width: 50px;
 }
