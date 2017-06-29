@@ -235,7 +235,53 @@ function Abalone(board = standard_board) {
 	}
 	
 	this.sideMoves = function() {
-		
+		var that = this
+		var sides = [0, 1, 2, 3, 4, 5].map(function(x) {return that.validSideMove(x)})
+		sides.forEach(function(side) {
+			if (side) {
+				var tile = side.find(function(x, index_x) {
+					return that.selection.every(function(y, index_y) {
+						return index_x === index_y || that.directions(y).every(function(z) {
+							var k = y[0] + z[0]
+							var l = y[1] + z[1]
+							return (k !== x[0] || l !== x[1])
+						})
+					})
+				})
+				
+				if (tile) {
+					that.colorTile(tile, 'yellow')
+					that.toTileDiv(tile).addEventListener('click', function() {
+						that.move(side)
+					})
+					var old_colors = side.map(function(x) {return that.colorOfTile(that.toTileDiv(x))})
+					that.toTileDiv(tile).addEventListener('mouseover', function() {
+						for (var i = 0; i < side.length; i++) {
+							that.colorTile(side[i], 'green')
+						}
+					})
+					that.toTileDiv(tile).addEventListener('mouseout', function() {
+						for (var i = 0; i < side.length; i++) {
+							that.colorTile(side[i], old_colors[i])
+						}
+					})
+				}				
+			}
+		})
+	}
+	
+	this.validSideMove = function(direction) {
+		var that = this
+		var tile_set = this.selection.map(function(x) {
+			var d = that.directions(x)[direction]
+			var i = x[0] + d[0]
+			var j = x[1] + d[1]
+			return [i, j]
+		})
+		var direction_valid = tile_set.every(function(tile) {return that.board[tile[0]] && that.board[tile[0]][tile[1]] === ' '})
+		if (direction_valid) {
+			return tile_set
+		}
 	}
 	
 	this.addForwardMove = function(tile, push_tiles) {
@@ -358,13 +404,17 @@ function Abalone(board = standard_board) {
 	}
 	
 	this.directions = function(tile) {
+		// result will equal [left, right, up-left, up-right, down-left, down-right]
 		var result = [[0,-1],[0,1],[-1,0],[1,0]]		
 		if (tile[0] === 4) {
-			result.push([-1,-1],[1,-1])
+			result.splice(2, 0, [-1,-1])
+			result.splice(4, 0, [1,-1])
 		} else if (tile[0] < 4) {
-			result.push([-1,-1],[1,1])
+			result.splice(2, 0, [-1,-1])
+			result.splice(5, 0, [1,1])
 		} else {
-			result.push([-1,1],[1,-1])
+			result.splice(3, 0, [-1,1])
+			result.splice(4, 0, [1,-1])
 		}
 		return result
 	}
