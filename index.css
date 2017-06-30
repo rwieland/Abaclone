@@ -36,3 +36,22 @@ h1 {
 	left: -1.289vh;
 	pointer-events: none;
 }
+
+#sidebar {
+	position: absolute;
+	float: left;
+	width: 150px;
+}
+
+#sidebar a {
+	margin: 10px;
+}
+
+#sidebar select {
+	margin: 10px;
+}
+
+#sidebar button {
+	margin: 4px;
+	margin-left: 10px;
+}

@@ -1,46 +1,49 @@
-var standard_board = [
-	['W', 'W', 'W', 'W', 'W'],
-	['W', 'W', 'W', 'W', 'W', 'W'],
-	[' ', ' ', 'W', 'W', 'W', ' ', ' '],
-	[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-	[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-	[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-	[' ', ' ', 'B', 'B', 'B', ' ', ' '],
-	['B', 'B', 'B', 'B', 'B', 'B'],
-	['B', 'B', 'B', 'B', 'B']];
-	
-var german_daisy_board = [
-	[' ', ' ', ' ', ' ', ' '],
-	['W', 'W', ' ', ' ', 'B', 'B'],
-	['W', 'W', 'W', ' ', 'B', 'B', 'B'],
-	[' ', 'W', 'W', ' ', ' ', 'B', 'B', ' '],
-	[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-	[' ', 'B', 'B', ' ', ' ', 'W', 'W', ' '],
-	['B', 'B', 'B', ' ', 'W', 'W', 'W'],
-	['B', 'B', ' ', ' ', 'W', 'W'],
-	[' ', ' ', ' ', ' ', ' ']];
-	
-var belgian_daisy_board = [
-	['W', 'W', ' ', 'B', 'B'],
-	['W', 'W', 'W', 'B', 'B', 'B'],
-	[' ', 'W', 'W', ' ', 'B', 'B', ' '],
-	[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-	[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-	[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-	[' ', 'B', 'B', ' ', 'W', 'W', ' '],
-	['B', 'B', 'B', 'W', 'W', 'W'],
-	['B', 'B', ' ', 'W', 'W']];
-
-var all_black_board = [
-	new Array(5).fill('B'),
-	new Array(6).fill('B'),
-	new Array(7).fill('B'),
-	new Array(8).fill('B'),
-	new Array(9).fill('B'),
-	new Array(8).fill('B'),
-	new Array(7).fill('B'),
-	new Array(6).fill('B'),
-	new Array(5).fill('B')]
+var boards = {
+	'standard_board' : [
+		['W', 'W', 'W', 'W', 'W'],
+		['W', 'W', 'W', 'W', 'W', 'W'],
+		[' ', ' ', 'W', 'W', 'W', ' ', ' '],
+		[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+		[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+		[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+		[' ', ' ', 'B', 'B', 'B', ' ', ' '],
+		['B', 'B', 'B', 'B', 'B', 'B'],
+		['B', 'B', 'B', 'B', 'B']
+	],
+	'german_daisy_board' : [
+		[' ', ' ', ' ', ' ', ' '],
+		['W', 'W', ' ', ' ', 'B', 'B'],
+		['W', 'W', 'W', ' ', 'B', 'B', 'B'],
+		[' ', 'W', 'W', ' ', ' ', 'B', 'B', ' '],
+		[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+		[' ', 'B', 'B', ' ', ' ', 'W', 'W', ' '],
+		['B', 'B', 'B', ' ', 'W', 'W', 'W'],
+		['B', 'B', ' ', ' ', 'W', 'W'],
+		[' ', ' ', ' ', ' ', ' ']
+	],
+	'belgian_daisy_board' : [
+		['W', 'W', ' ', 'B', 'B'],
+		['W', 'W', 'W', 'B', 'B', 'B'],
+		[' ', 'W', 'W', ' ', 'B', 'B', ' '],
+		[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+		[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+		[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+		[' ', 'B', 'B', ' ', 'W', 'W', ' '],
+		['B', 'B', 'B', 'W', 'W', 'W'],
+		['B', 'B', ' ', 'W', 'W']
+	],
+	'all_black_board' : [
+		new Array(5).fill('B'),
+		new Array(6).fill('B'),
+		new Array(7).fill('B'),
+		new Array(8).fill('B'),
+		new Array(9).fill('B'),
+		new Array(8).fill('B'),
+		new Array(7).fill('B'),
+		new Array(6).fill('B'),
+		new Array(5).fill('B')
+	]
+}
 	
 function copyBoard(board) {
 	var copy = []
@@ -54,7 +57,7 @@ function copyBoard(board) {
 	return copy
 }
 	
-function Abalone(board = standard_board) {
+function Abalone(board = boards[standard_board]) {
 	this.board = copyBoard(board)
 	this.legend = {'B': 'blackball', 'W': 'whiteball', ' ': 'tile'}
 	this.current_player = 'B'
@@ -442,6 +445,12 @@ function Abalone(board = standard_board) {
 }
 
 window.onload = function() {
-	var new_game = new Abalone
-	new_game.startTurn()
+	var board_selection = document.getElementById('boardselection')
+	var start_button = document.getElementById('startbutton')
+	start_button.addEventListener('click', function() {
+		var new_board = board_selection.value
+		var new_game = new Abalone(boards[new_board])
+		console.log(new_game.board)
+		new_game.startTurn()
+	})
 }
